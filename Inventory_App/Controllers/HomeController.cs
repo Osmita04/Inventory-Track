@@ -25,6 +25,7 @@ namespace Inventory_App.Controllers
                     }
                     else
                     {
+                        //github check
                         Session["UserID"] = user.UserID;
                         Session["UserName"] = user.UserName;
                         Session["Email"] = user.Email;
