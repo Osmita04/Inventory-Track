@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\ProjectSD\Application\InventoryERP_Solution\DatabaseLayer\InventoryERPModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Hp\source\repos\Inventory-Track\DatabaseLayer\InventoryERPModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
