@@ -286,6 +286,332 @@ namespace Inventory_App.Controllers
                 }
             }
             return View(accountactivitymv);
+
         }
+
+        //Account Head's
+        //=============================================================================================================================================
+        public ActionResult AllAccountHeads()
+        {
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+
+            var list = new List<AccountHeadMV>();
+            var accountheads = DB.tblAccountHeads.ToList();
+           // var accountheads = DB.tblAccountHeads.Include("tblUser").ToList();//from gpt
+            foreach (var accounthead in accountheads)
+            {
+
+                var addaccounthead = new AccountHeadMV();
+                addaccounthead.AccountHeadID = accounthead.AccountHeadID;
+                addaccounthead.AccountHeadName = accounthead.AccountHeadName;
+                addaccounthead.Code = accounthead.Code;
+                addaccounthead.UserID = accounthead.UserID;
+                //addaccounthead.CreatedBy = addaccounthead.tblUser.UserName;///eta dile error ashe
+                addaccounthead.CreatedBy = accounthead.tblUser != null ? accounthead.tblUser.UserName : "Unknown";//from gpt
+                list.Add(addaccounthead);
+            }
+
+            return View(list);
+
+        }
+
+        public ActionResult CreateAccountHead()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            var accountheadmv = new AccountHeadMV();
+            accountheadmv.UserID = userid;
+            return View(accountheadmv);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAccountHead(AccountHeadMV accountheadmv)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            if (ModelState.IsValid)
+            {
+                var checkaccounthead = DB.tblAccountHeads.Where(u => u.AccountHeadName == accountheadmv.AccountHeadName.Trim()).FirstOrDefault();
+                if (checkaccounthead == null)
+                {
+                    var newaccounthead = new tblAccountHead();
+                    newaccounthead.AccountHeadName = accountheadmv.AccountHeadName;
+                    newaccounthead.Code = accountheadmv.Code;
+                    newaccounthead.UserID = userid;
+                    DB.tblAccountHeads.Add(newaccounthead);
+                    DB.SaveChanges();
+                    return RedirectToAction("AllAccountHeads");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("AccountHeadName", "Already Exist!");
+                }
+            }
+            return View(accountheadmv);
+        }
+
+        public ActionResult EditAccountHead(int ? accountheadid)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            var accounthead = DB.tblAccountHeads.Find(accountheadid);
+            var accountheadmv = new AccountHeadMV();
+            accountheadmv.AccountHeadID = accounthead.AccountHeadID;
+            accountheadmv.AccountHeadName = accounthead.AccountHeadName;
+            accountheadmv.Code = accounthead.Code;          
+            accountheadmv.UserID = userid;
+            return View(accountheadmv);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAccountHead(AccountHeadMV accountheadmv)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            if (ModelState.IsValid)
+            {
+                var checkaccounthead = DB.tblAccountHeads.Where(u => u.AccountHeadName == accountheadmv.AccountHeadName.Trim() && u.AccountHeadID != accountheadmv.AccountHeadID).FirstOrDefault();
+                if (checkaccounthead == null)
+                {
+                    var newaccounthead = new tblAccountHead();
+                    newaccounthead.AccountHeadID = accountheadmv.AccountHeadID;
+                    newaccounthead.AccountHeadName = accountheadmv.AccountHeadName;
+                    newaccounthead.Code = accountheadmv.Code;
+                    newaccounthead.UserID = userid;
+                    DB.Entry(newaccounthead).State = System.Data.Entity.EntityState.Modified;
+                    DB.SaveChanges();
+                    return RedirectToAction("AllAccountHeads");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("AccountHeadName", "Already Exist!");
+                }
+            }
+            return View(accountheadmv);
+        }
+
+        //Account Head's
+        //=============================================================================================================================================
+        public ActionResult AllFinancialYears()
+        {
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+
+            var list = new List<FinancialYearMV>();
+            var financialyears = DB.tblFinancialYears.ToList();
+            // var accountheads = DB.tblAccountHeads.Include("tblUser").ToList();//from gpt
+            foreach (var financialyear in financialyears)
+            {
+
+                var addfinancialyear = new FinancialYearMV();
+                addfinancialyear.FinancialYearID = financialyear.FinancialYearID;
+                addfinancialyear.FinancialYear = financialyear.FinancialYear;
+                addfinancialyear.StartDate = financialyear.StartDate;
+                addfinancialyear.EndDate = financialyear.EndDate;
+                addfinancialyear.IsActive = financialyear.IsActive;
+                addfinancialyear.UserID = financialyear.UserID;
+                addfinancialyear.CreatedBy = financialyear.tblUser.UserName;               
+                list.Add(addfinancialyear);
+            }
+
+            return View(list);
+
+        }
+        
+        public ActionResult CreateFinancialYear()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            var financialyearmv = new FinancialYearMV();
+            financialyearmv.UserID = userid;
+            financialyearmv.StartDate = DateTime.Now;
+            financialyearmv.EndDate = DateTime.Now.AddDays(365);
+            return View(financialyearmv);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFinancialYear(FinancialYearMV financialyearmv)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            if (ModelState.IsValid)
+            {
+                var checkfinancialyear = DB.tblFinancialYears.Where(u => u.FinancialYear == financialyearmv.FinancialYear.Trim()).FirstOrDefault();
+                if (checkfinancialyear == null)
+                {
+                    var newfinancialyear = new tblFinancialYear();
+                    newfinancialyear.FinancialYear = financialyearmv.FinancialYear;
+                    newfinancialyear.StartDate = financialyearmv.StartDate;
+                    newfinancialyear.EndDate = financialyearmv.EndDate;
+                    newfinancialyear.IsActive = financialyearmv.IsActive;
+                    newfinancialyear.UserID = userid;
+                    DB.tblFinancialYears.Add(newfinancialyear);
+                    DB.SaveChanges();
+                    return RedirectToAction("AllFinancialYears");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("FinancialYear", "Already Exist!");
+                }
+            }
+            return View(financialyearmv);
+        }
+
+        public ActionResult EditFinancialYear(int ? financialyearid)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            var financialyear = DB.tblFinancialYears.Find(financialyearid);
+
+            var editfinancialyear = new FinancialYearMV();
+            editfinancialyear.FinancialYearID = financialyear.FinancialYearID;
+            editfinancialyear.FinancialYear = financialyear.FinancialYear;
+            editfinancialyear.StartDate = financialyear.StartDate;
+            editfinancialyear.EndDate = financialyear.EndDate;
+            editfinancialyear.IsActive = financialyear.IsActive;
+            editfinancialyear.UserID = financialyear.UserID;
+            editfinancialyear.CreatedBy = financialyear.tblUser.UserName;
+
+            return View(editfinancialyear);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFinancialYear(FinancialYearMV financialyearmv)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            if (usertypeid != 1)
+            {
+                return RedirectToAction("Admin", "Dashboard");
+            }
+            if (ModelState.IsValid)
+            {
+                var checkfinancialyear = DB.tblFinancialYears.Where(u => u.FinancialYear == financialyearmv.FinancialYear.Trim() && u.FinancialYearID != financialyearmv.FinancialYearID).FirstOrDefault();
+                if (checkfinancialyear == null)
+                {
+                    var editfinancialyear = new tblFinancialYear();
+                    editfinancialyear.FinancialYearID = financialyearmv.FinancialYearID;
+                    editfinancialyear.FinancialYear = financialyearmv.FinancialYear;
+                    editfinancialyear.StartDate = financialyearmv.StartDate;
+                    editfinancialyear.EndDate = financialyearmv.EndDate;
+                    editfinancialyear.IsActive = financialyearmv.IsActive;
+                    editfinancialyear.UserID = userid;
+                    DB.Entry(editfinancialyear).State = System.Data.Entity.EntityState.Modified;
+                    DB.SaveChanges();
+                    return RedirectToAction("AllFinancialYears");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("FinancialYear", "Already Exist!");
+                }
+            }
+            return View(financialyearmv);
+        }
+
+
+
     }
 }

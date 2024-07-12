@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer;
+using Inventory_App.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -32,6 +33,98 @@ namespace Inventory_App.Controllers
                         Session["UserTypeID"] = user.UserTypeID;
                         Session["UserType"] = user.tblUserType.UserType;
                         Session["IsActive"] = user.IsActive == true ? "Active" : "No-Active";
+                        if(user.UserTypeID > 2)
+                        {
+                            var employee = db.tblEmployees.Where(u => u.UserID == user.UserID).FirstOrDefault();
+                            if (employee == null)
+                            {
+                                ViewBag.ErrorMessage = "Username and Password are incorrect";
+                                Session["UserID"] = string.Empty;
+                                Session["UserName"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["UserTypeID"] = string.Empty;
+                                Session["UserType"] = string.Empty;
+                                Session["IsActive"] = string.Empty;
+
+
+                                Session["EmployeeID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["ContactNo"] = string.Empty;
+                                Session["Photo"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["Address"] = string.Empty;
+                                Session["CNIC"] = string.Empty;
+                                Session["Designation"] = string.Empty;
+                                Session["Description"] = string.Empty;
+                                Session["MonthlySalary"] = string.Empty;
+                                Session["BranchID"] = string.Empty;
+                                Session["CompanyID"] = string.Empty;
+                                Session["EmployeeUserID"] = string.Empty;
+
+
+                                Session["CompanyID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["Logo"] = string.Empty;
+                                return View();
+                            }
+                            else
+                            {
+                                Session["EmployeeID"] = employee.EmployeeID;
+                                Session["Name"] = employee.Name;
+                                Session["ContactNo"] = employee.ContactNo;
+                                Session["Photo"] = employee.Photo;
+                                Session["Email"] = employee.Email;
+                                Session["Address"] = employee.Address;
+                                Session["CNIC"] = employee.CNIC;
+                                Session["Designation"] = employee.Designation;
+                                Session["Description"] = employee.Description;
+                                Session["MonthlySalary"] = employee.MonthlySalary;
+                                Session["BranchID"] = employee.BranchID;
+                                Session["CompanyID"] = employee.CompanyID;
+                                Session["EmployeeUserID"] = employee.UserID;
+                            
+
+                            }
+                            var company = db.tblCompanies.Find(employee.CompanyID);
+                            if(company == null)
+                            {
+                                ViewBag.ErrorMessage = "Username and Password are incorrect";
+                                Session["UserID"] = string.Empty;
+                                Session["UserName"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["UserTypeID"] = string.Empty;
+                                Session["UserType"] = string.Empty;
+                                Session["IsActive"] = string.Empty;
+
+
+                                Session["EmployeeID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["ContactNo"] = string.Empty;
+                                Session["Photo"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["Address"] = string.Empty;
+                                Session["CNIC"] = string.Empty;
+                                Session["Designation"] = string.Empty;
+                                Session["Description"] = string.Empty;
+                                Session["MonthlySalary"] = string.Empty;
+                                Session["BranchID"] = string.Empty;
+                                Session["CompanyID"] = string.Empty;
+                                Session["EmployeeUserID"] = string.Empty;
+
+
+                                Session["CompanyID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["Logo"] = string.Empty;
+                                return View();
+                            }
+                            else
+                            {
+                                Session["CompanyID"] = company.CompanyID;
+                                Session["Name"] = company.Name;
+                                Session["Logo"] = company.Logo;
+                            }
+
+                    } 
                         var usertypeid = user.UserTypeID;   
                         if (user.UserTypeID == 1)
                         {
@@ -76,16 +169,58 @@ namespace Inventory_App.Controllers
             Session["UserTypeID"] = string.Empty;
             Session["UserType"] = string.Empty;
             Session["IsActive"] = string.Empty;
+
+
+            Session["EmployeeID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["ContactNo"] = string.Empty;
+            Session["Photo"] = string.Empty;
+            Session["Email"] = string.Empty;
+            Session["Address"] = string.Empty;
+            Session["CNIC"] = string.Empty;
+            Session["Designation"] = string.Empty;
+            Session["Description"] = string.Empty;
+            Session["MonthlySalary"] = string.Empty;
+            Session["BranchID"] = string.Empty;
+            Session["CompanyID"] = string.Empty;
+            Session["EmployeeUserID"] = string.Empty;
+
+
+            Session["CompanyID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["Logo"] = string.Empty;
+
             return View();
         }
 
         public ActionResult Logout()
         {
+            Session["UserID"] = string.Empty;
             Session["UserName"] = string.Empty;
             Session["Email"] = string.Empty;
             Session["UserTypeID"] = string.Empty;
             Session["UserType"] = string.Empty;
             Session["IsActive"] = string.Empty;
+
+
+            Session["EmployeeID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["ContactNo"] = string.Empty;
+            Session["Photo"] = string.Empty;
+            Session["Email"] = string.Empty;
+            Session["Address"] = string.Empty;
+            Session["CNIC"] = string.Empty;
+            Session["Designation"] = string.Empty;
+            Session["Description"] = string.Empty;
+            Session["MonthlySalary"] = string.Empty;
+            Session["BranchID"] = string.Empty;
+            Session["CompanyID"] = string.Empty;
+            Session["EmployeeUserID"] = string.Empty;
+
+
+            Session["CompanyID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["Logo"] = string.Empty;
             return RedirectToAction("Login");
 
         }

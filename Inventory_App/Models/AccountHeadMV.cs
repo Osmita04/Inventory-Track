@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace Inventory_App.Models
         public string AccountHeadName { get; set; }
         public int Code { get; set; }
         public int UserID { get; set; }
-        [Required(ErrorMessage = "Required")]
+        
         [Display(Name = "Created By")]
-        public string CreatedBy { get; set; }    
+        public string CreatedBy { get; set; }
+        public tblUser tblUser { get; set; }
 
     }
 }
