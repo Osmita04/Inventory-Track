@@ -9,9 +9,10 @@ namespace Inventory_App.Models
     public class BranchMV
     {
         public int BranchID { get; set; }
-       
-        public int BranchTypeID { get; set; }
         [Required(ErrorMessage = "Required*")]
+
+        public int BranchTypeID { get; set; }
+       
         [Display(Name = "Branch Type")]
         public string BranchType { get; set; }
         [Required(ErrorMessage = "Required*")]
@@ -23,8 +24,9 @@ namespace Inventory_App.Models
         [Required(ErrorMessage = "Required*")]
         [Display(Name = "Address")]
         public string BranchAddress { get; set; }
-        public int CompanyID { get; set; }
         [Required(ErrorMessage = "Required*")]
+        public int CompanyID { get; set; }
+       
         [Display(Name = "Company")]
         public string Company { get; set; }
         public Nullable<int> BrchID { get; set; }//kon branch er
