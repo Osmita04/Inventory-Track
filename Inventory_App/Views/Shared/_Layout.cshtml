@@ -357,16 +357,18 @@
                                 </ul>
                             </li>
             }
+                            @if (usertypeid > 2)
+                            {
                             <li class=" ">
                                 <a href="#tables" title="Tables" data-toggle="collapse">
                                     <em class="icon-grid"></em>
-                                    <span data-localize="sidebar.nav.table.TABLE">Tables</span>
+                                    <span data-localize="sidebar.nav.table.TABLE">Branches</span>
                                 </a>
                                 <ul class="sidebar-nav sidebar-subnav collapse" id="tables">
-                                    <li class="sidebar-subnav-header">Tables</li>
+                                    <li class="sidebar-subnav-header">Setting</li>
                                     <li class=" ">
-                                        <a href="table-standard.html" title="Standard">
-                                            <span data-localize="sidebar.nav.table.STANDARD">Standard</span>
+                                        <a href="@Url.Content("~/Branch/AllCompanyBranches")" title="Standard">
+                                            <span data-localize="sidebar.nav.table.STANDARD">Branches</span>
                                         </a>
                                     </li>
                                     <li class=" ">
@@ -386,6 +388,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            }
                             <li class=" ">
                                 <a href="#maps" title="Maps" data-toggle="collapse">
                                     <em class="icon-map"></em>

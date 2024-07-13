@@ -60,7 +60,7 @@ namespace Inventory_App.Controllers
                                 Session["BranchID"] = string.Empty;
                                 Session["CompanyID"] = string.Empty;
                                 Session["EmployeeUserID"] = string.Empty;
-
+                                Session["BranchTypeID"] = string.Empty;
 
                                 Session["CompanyID"] = string.Empty;
                                 Session["Name"] = string.Empty;
@@ -82,6 +82,7 @@ namespace Inventory_App.Controllers
                                 Session["BranchID"] = employee.BranchID;
                                 Session["CompanyID"] = employee.CompanyID;
                                 Session["EmployeeUserID"] = employee.UserID;
+                                Session["BranchTypeID"] = db.tblBranches.Find(employee.BranchID).BranchTypeID;
                             
 
                             }
@@ -110,7 +111,7 @@ namespace Inventory_App.Controllers
                                 Session["BranchID"] = string.Empty;
                                 Session["CompanyID"] = string.Empty;
                                 Session["EmployeeUserID"] = string.Empty;
-
+                                Session["BranchTypeID"] = string.Empty ;
 
                                 Session["CompanyID"] = string.Empty;
                                 Session["Name"] = string.Empty;
@@ -184,7 +185,7 @@ namespace Inventory_App.Controllers
             Session["BranchID"] = string.Empty;
             Session["CompanyID"] = string.Empty;
             Session["EmployeeUserID"] = string.Empty;
-
+            Session["BranchTypeID"] = string.Empty;
 
             Session["CompanyID"] = string.Empty;
             Session["Name"] = string.Empty;
@@ -216,7 +217,7 @@ namespace Inventory_App.Controllers
             Session["BranchID"] = string.Empty;
             Session["CompanyID"] = string.Empty;
             Session["EmployeeUserID"] = string.Empty;
-
+            Session["BranchTypeID"] = string.Empty;
 
             Session["CompanyID"] = string.Empty;
             Session["Name"] = string.Empty;
