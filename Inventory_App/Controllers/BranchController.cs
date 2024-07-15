@@ -49,6 +49,25 @@ namespace Inventory_App.Controllers
                 var company = DB.tblCompanies.Find(branch.CompanyID).Name;
                 addbranch.Company = company;
                 addbranch.BrchID = branch.BrchID;
+
+                var employee = branch.tblEmployees.Where(b => b.Designation.ToLower().Contains("focal")).FirstOrDefault();
+                if(employee != null)
+                {
+                    var user = DB.tblUsers.Find(employee.UserID);
+                    if(user.IsActive == true)
+                    {
+                        addbranch.IsHaveAFocalPerson = true;
+                    }
+                    else
+                    {
+                        addbranch.IsHaveAFocalPerson = false;
+
+                    }
+                }
+                else
+                {
+                    addbranch.IsHaveAFocalPerson = false;
+                }
                 list.Add(addbranch);
             }
             return View(list);
@@ -81,7 +100,7 @@ namespace Inventory_App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCompanyBranch(BranchMV branchMV)
+        public ActionResult CreateCompanyBranch(BranchMV branchmv)
         {
 
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
@@ -104,21 +123,99 @@ namespace Inventory_App.Controllers
             if(ModelState.IsValid)
             {
                 var newbranch = new tblBranch();
-                newbranch.BranchName = branchMV.BranchName;
-                newbranch.BranchTypeID = branchMV.BranchTypeID;
-                newbranch.BranchAddress = branchMV.BranchAddress;
-                newbranch.BranchContact = branchMV.BranchContact;
-                newbranch.CompanyID = branchMV.CompanyID;
+                newbranch.BranchName = branchmv.BranchName;
+                newbranch.BranchTypeID = branchmv.BranchTypeID;
+                newbranch.BranchAddress = branchmv.BranchAddress;
+                newbranch.BranchContact = branchmv.BranchContact;
+                newbranch.CompanyID = branchmv.CompanyID;
                 newbranch.BrchID = branchid;
                 DB.tblBranches.Add(newbranch);
                 DB.SaveChanges();
                 return RedirectToAction("AllCompanyBranches");
             }
 
-            ViewBag.BranchTypeID = new SelectList(DB.tblBranchTypes.Where(bt => bt.BranchTypeID > branchtypeid), "BranchTypeID", "BranchType", branchMV.BranchTypeID);
+            ViewBag.BranchTypeID = new SelectList(DB.tblBranchTypes.Where(bt => bt.BranchTypeID > branchtypeid), "BranchTypeID", "BranchType", branchmv.BranchTypeID);
            
 
-            return View(branchMV);
+            return View(branchmv);
         }
+        //ekhan theke edit company branch start hoy jeta amader video er kintu oikhane 143 no line branchmv niye 
+        public ActionResult EditCompanyBranch(int? branchID)
+        {
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);    
+            
+            var editbranch = DB.tblBranches.Find(branchID);
+            var branch = new BranchMV();
+            branch.BranchID = editbranch.BranchID;
+            branch.BranchTypeID = editbranch.BranchTypeID;
+            branch.BranchType = editbranch.tblBranchType.BranchType;
+            branch.BranchName = editbranch.BranchName;
+            branch.BranchContact = editbranch.BranchContact;
+            branch.BranchAddress = editbranch.BranchAddress;
+            branch.CompanyID = editbranch.CompanyID;
+            var company = DB.tblCompanies.Find(editbranch.CompanyID).Name;
+            branch.Company = company;
+            branch.BrchID = editbranch.BrchID;
+            ViewBag.BranchTypeID = new SelectList(DB.tblBranchTypes.Where(bt => bt.BranchTypeID > branchtypeid), "BranchTypeID", "BranchType", editbranch.BranchTypeID);
+            return View(branch);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCompanyBranch(BranchMV branchmv)
+        {
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            if (ModelState.IsValid)
+            {
+                
+                var editbranch = new tblBranch();
+                editbranch.BranchID = branchmv.BranchID;
+                editbranch.BranchName = branchmv.BranchName;
+                editbranch.BranchTypeID = branchmv.BranchTypeID;
+                editbranch.BranchAddress = branchmv.BranchAddress;
+                editbranch.BranchContact = branchmv.BranchContact;
+                editbranch.CompanyID = branchmv.CompanyID;
+                editbranch.BrchID = branchmv.BrchID;
+                DB.Entry(editbranch).State = System.Data.Entity.EntityState.Modified;
+                DB.SaveChanges();
+                return RedirectToAction("AllCompanyBranches");
+            }
+
+            ViewBag.BranchTypeID = new SelectList(DB.tblBranchTypes.Where(bt => bt.BranchTypeID > branchtypeid), "BranchTypeID", "BranchType", branchmv.BranchTypeID);
+
+
+            return View(branchmv);
+        }
+
+
     }
 }

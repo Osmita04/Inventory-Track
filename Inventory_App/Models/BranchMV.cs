@@ -29,6 +29,7 @@ namespace Inventory_App.Models
        
         [Display(Name = "Company")]
         public string Company { get; set; }
-        public Nullable<int> BrchID { get; set; }//kon branch er
+        public bool IsHaveAFocalPerson {  get; set; }
+        public Nullable<int> BrchID { get; set; }
     }
 }
