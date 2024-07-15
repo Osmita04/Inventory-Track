@@ -11,10 +11,9 @@
             @using (Html.BeginForm("CreateBranchType", "AdminConfig", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(u => u.BranchTypeID)
-
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(u => u.BranchTypeID)
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.BranchType, htmlAttributes: new { @class = "control-label col-md-6" })

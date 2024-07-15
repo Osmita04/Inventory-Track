@@ -16,7 +16,8 @@
     <AssemblyName>Inventory_App</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -138,6 +139,7 @@
     <Content Include="Content\Template\img\user\11.jpg" />
     <Content Include="Content\Template\img\user\12.jpg" />
     <Content Include="Content\Template\img\user\13.jpg" />
+    <Content Include="Content\Template\img\user\employee.png" />
     <Content Include="Content\Template\js\app.js" />
     <Content Include="Content\Template\vendor\%40ttskch\select2-bootstrap4-theme\dist\select2-bootstrap4.css" />
     <Content Include="Content\Template\vendor\animate.css\animate.css" />
@@ -279,6 +281,7 @@
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -305,6 +308,7 @@
     <Compile Include="Models\CustomerReturnPaymentMV.cs" />
     <Compile Include="Models\EmployeeMV.cs" />
     <Compile Include="Models\FinancialYearMV.cs" />
+    <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\PayrollMV.cs" />
     <Compile Include="Models\PurchaseCartDetailMV.cs" />
     <Compile Include="Models\SaleCartDetailMV.cs" />
@@ -376,6 +380,11 @@
     <Content Include="Views\AdminConfig\EditFinancialYear.cshtml" />
     <Content Include="Views\Branch\CreateCompanyBranch.cshtml" />
     <Content Include="Views\Branch\AllCompanyBranches.cshtml" />
+    <Content Include="Views\Branch\EditCompanyBranch.cshtml" />
+    <Content Include="Views\Employee\BranchEmployees.cshtml" />
+    <Content Include="Views\Employee\NewBranchEmployee.cshtml" />
+    <Content Include="Views\Employee\EditBranchEmployee.cshtml" />
+    <Content Include="Views\Employee\CreateBranchFocalPerson.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

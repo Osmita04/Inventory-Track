@@ -47,9 +47,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.BranchName)
                         </td>
-                        <td>
+                        <th>
                             @Html.DisplayFor(modelItem => item.Company)
-                        </td>
+                        </th>
                         <td>
                             @Html.DisplayFor(modelItem => item.BranchContact)
                         </td>
@@ -57,8 +57,16 @@
                             @Html.DisplayFor(modelItem => item.BranchAddress)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "EditCompanyBranch", new { branchid = item.BranchID }, new { @class = "btn btn-warning" })
-
+                            @if (item.IsHaveAFocalPerson == true)
+                            {
+                                @Html.ActionLink("Focal Person", "ShowBranchFocalPerson", "Employee", new { branchID = item.BranchID }, new { @class = "btn btn-success" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Add Focal Person", "CreateBranchFocalPerson", "Employee", new { branchID = item.BranchID }, new { @class = "btn btn-primary" })
+                            }
+                           
+                            @Html.ActionLink("Edit", "EditCompanyBranch", new { branchID = item.BranchID }, new { @class = "btn btn-warning" })
                         </td>
                     </tr>
                 }
