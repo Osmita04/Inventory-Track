@@ -12,10 +12,13 @@ namespace Inventory_App.Models
     {
         
         public int CategoryID { get; set; }
+        [Display(Name = "Category")]
         public string categoryName { get; set; }
         public int BranchID { get; set; }
         public int CompanyID { get; set; }
         public int UserID { get; set; }
+        [Display(Name ="Create By")]
+        public string CreatedBy { get; set; }
     
        
     }
