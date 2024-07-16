@@ -2,6 +2,7 @@
 using Inventory_App.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Net;
@@ -235,20 +236,56 @@ namespace Inventory_App.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            var branch = DB.tblEmployees.Where(e => e.BranchID == branchID && e.Designation.Contains("Focal"));
+            var focalperson = new FocalPersonMV();
+            focalperson.employeeMV = new EmployeeMV();
+            focalperson.userMV = new UserMV();
+            var employees = DB.tblEmployees.Where(e => e.BranchID == branchID && e.Designation.Contains("Focal"));
+
+            foreach (var employee in employees)
+            {
+                var user = DB.tblUsers.Where(u => u.UserID == employee.UserID && u.IsActive == true).FirstOrDefault();
+                if (user != null)
+                {
+                    focalperson.CompanyID = employee.CompanyID;
+                    focalperson.BranchID = employee.BranchID;
+                    //Employee Details
+                    focalperson.employeeMV.Name = employee.Name;
+
+                    focalperson.employeeMV.ContactNo = employee.ContactNo;
+                    focalperson.employeeMV.Photo = employee.Photo;
+
+                    focalperson.employeeMV.Email = employee.Email;
+
+                    focalperson.employeeMV.Address = employee.Address;
+
+                    focalperson.employeeMV.CNIC = employee.CNIC;
+
+                    focalperson.employeeMV.Designation = employee.Designation;
+
+                    focalperson.employeeMV.Description = employee.Description;
+                    focalperson.employeeMV.MonthlySalary = employee.MonthlySalary;
+
+
+                    //User Details
+
+                    focalperson.userMV.UserID = user.UserID;
+
+                    focalperson.userMV.UserType = user.tblUserType.UserType;
+                    focalperson.userMV.FullName = user.FullName;
+                    focalperson.userMV.Email = user.Email;
+                    focalperson.userMV.ContactNo = user.ContactNo;
+                    focalperson.userMV.UserName = user.UserName;
+
+                    focalperson.userMV.IsActive = user.IsActive;
+                    focalperson.userMV.Address = user.Address;
+
+
+
+                }
+
             
-             foreach(var item in branch)
-               {
-                  
-
-               }
-            
-
-
-
-
-            return View();
-        }
+}                   return View(focalperson);
+             }
         public ActionResult CreateBranchFocalPerson(int ? branchID)
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
