@@ -276,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountsSettingController.cs" />
     <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
@@ -392,6 +393,8 @@
     <Content Include="Views\Stock\StockProducts.cshtml" />
     <Content Include="Views\Stock\CreateProduct.cshtml" />
     <Content Include="Views\Stock\EditProduct.cshtml" />
+    <Content Include="Views\AccountsSetting\BranchAccountSetting.cshtml" />
+    <Content Include="Views\AccountsSetting\CreateBranchAccountSetting.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

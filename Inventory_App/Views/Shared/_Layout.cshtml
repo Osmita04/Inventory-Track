@@ -315,8 +315,7 @@
                                 </li>
                             }
                             @*Accounts Setting*@
-                            @if (usertypeid == 1 || usertypeid == 2)
-                            {
+                            
                                 <li class=" ">
                                     <a href="#charts" title="Charts" data-toggle="collapse">
                                         <em class="icon-graph"></em>
@@ -324,39 +323,45 @@
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
                                         <li class="sidebar-subnav-header">Setting</li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Flot">
-                                                <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Radial">
-                                                <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Chart JS">
-                                                <span>Financial Year's</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-rickshaw.html" title="Rickshaw">
-                                                <span>Rickshaw</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-morris.html" title="MorrisJS">
-                                                <span>MorrisJS</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-chartist.html" title="Chartist">
-                                                <span>Chartist</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                        @if (usertypeid == 1 || usertypeid == 2)
+                                        {
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Flot">
+                                                    <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Radial">
+                                                    <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Chart JS">
+                                                    <span>Financial Year's</span>
+                                                </a>
+                                            </li>
+}
+                                        @if (usertypeid > 2)
+                                        {
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AccountsSetting/BranchAccountSetting")" title="Account Flow Setting">
+                                                    <span>Account Flow Setting</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="chart-morris.html" title="MorrisJS">
+                                                    <span>MorrisJS</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="chart-chartist.html" title="Chartist">
+                                                    <span>Chartist</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        </ul>
                                 </li>
-                            }
+                          
                             @if (usertypeid > 2)
                             {
                                 <li class=" ">
