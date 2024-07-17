@@ -387,6 +387,11 @@
     <Content Include="Views\Employee\CreateBranchFocalPerson.cshtml" />
     <Content Include="Views\Employee\ShowBranchFocalPerson.cshtml" />
     <Content Include="Views\Stock\AllCategories.cshtml" />
+    <Content Include="Views\Stock\CreateCategory.cshtml" />
+    <Content Include="Views\Stock\EditCategory.cshtml" />
+    <Content Include="Views\Stock\StockProducts.cshtml" />
+    <Content Include="Views\Stock\CreateProduct.cshtml" />
+    <Content Include="Views\Stock\EditProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
