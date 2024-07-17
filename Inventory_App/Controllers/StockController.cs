@@ -227,7 +227,7 @@ namespace Inventory_App.Controllers
 
             }
 
-            return View();
+            return View(list);
 
         }
 
