@@ -1,45 +1,43 @@
-﻿@model IEnumerable<Inventory_App.Models.AccountSettingMV>
+﻿@model IEnumerable<Inventory_App.Models.AccountSubControlMV>
 
 @{
-    ViewBag.Title = "Account Setting";
+    ViewBag.Title = "AllAccountSubControls";
 }
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title">Account Setting</div>
+        <div class="card-title">Account Sub Controls</div>
 
 
     </div>
     <div class="card-body">
-        <div>@Html.ActionLink("New Setting", "CreateBranchAccountSetting", null, new { @class = "btn btn-primary" })</div>
+        <div>@Html.ActionLink("New Account", "CreateAccountSubControl", null, new { @class = "btn btn-primary" })</div>
         <hr />
         <table class="table table-striped my-4 w-100" id="datatable2">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountHead)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountControl)
+                    </th>
 
                     <th>
-                       Account Head
+                        @Html.DisplayNameFor(model => model.AccountSubControlName)
                     </th>
+
+
                     <th>
-                       Account Control
+                        @Html.DisplayNameFor(model => model.CreatedBy)
                     </th>
-                    <th>
-                       Account Sub Control
-                    </th>
-                    <th>
-                        Activity
-                    </th>
-                    <th>
-                        Action
-                    </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach (var item in Model)
                 {
                     <tr>
-
                         <td>
                             @Html.DisplayFor(modelItem => item.AccountHead)
                         </td>
@@ -47,13 +45,14 @@
                             @Html.DisplayFor(modelItem => item.AccountControl)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.AccountSubControl)
+                            @Html.DisplayFor(modelItem => item.AccountSubControlName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.AccountActivity)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "EditBranchAccountSetting", new { id = item.AccountSettingID }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Edit", "EditAccountSubControl", new { id = item.AccountSubControlID }, new { @class = "btn btn-warning" })
                         </td>
                     </tr>
                 }

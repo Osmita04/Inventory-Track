@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Inventory_App.Models.StockMV>
+
+@{
+    ViewBag.Title = "Purchase";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">New Purchase</div>
+
+
+    </div>
+    <div class="card-body">
+        <div>@Html.ActionLink("Purchase Cart", "PurchaseCart", null, new { @class = "btn btn-primary" })</div>
+        <hr />
+        <table class="table table-striped my-4 w-100" id="datatable2">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SaleUnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpiryDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Manufacture)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StockTreshHoldQuantity)
+                    </th>
+                    <th>
+                        Previous Purchase Unit Price
+                    </th>
+                    <th>
+                        Current Purchase Unit Price
+                    </th>
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpiryDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Manufacture)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StockTreshHoldQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SaleUnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CurrentPurchaseUnitPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CurrentPurchaseUnitPrice)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("+", "AddProductToCart", new { productID = item.ProductID }, new { @class = "btn btn-warning" })
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>

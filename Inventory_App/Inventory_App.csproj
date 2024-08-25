@@ -16,7 +16,8 @@
     <AssemblyName>Inventory_App</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -280,10 +281,14 @@
     <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -312,6 +317,7 @@
     <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\PayrollMV.cs" />
     <Compile Include="Models\PurchaseCartDetailMV.cs" />
+    <Compile Include="Models\PurchaseItemsMV.cs" />
     <Compile Include="Models\SaleCartDetailMV.cs" />
     <Compile Include="Models\StateMV.cs" />
     <Compile Include="Models\StockMV.cs" />
@@ -395,6 +401,20 @@
     <Content Include="Views\Stock\EditProduct.cshtml" />
     <Content Include="Views\AccountsSetting\BranchAccountSetting.cshtml" />
     <Content Include="Views\AccountsSetting\CreateBranchAccountSetting.cshtml" />
+    <Content Include="Views\Accounts\CreateAccountControl.cshtml" />
+    <Content Include="Views\Accounts\EditAccountControl.cshtml" />
+    <Content Include="Views\Accounts\AllAccountControls.cshtml" />
+    <Content Include="Views\Accounts\AllAccountSubControls.cshtml" />
+    <Content Include="Views\Accounts\CreateAccountSubControl.cshtml" />
+    <Content Include="Views\Accounts\EditAccountSubControl.cshtml" />
+    <Content Include="Views\AccountsSetting\EditBranchAccountSetting.cshtml" />
+    <Content Include="Views\Customer\AllBranchCustomer.cshtml" />
+    <Content Include="Views\Customer\CreateBranchCustomer.cshtml" />
+    <Content Include="Views\Customer\EditBranchCustomer.cshtml" />
+    <Content Include="Views\Supplier\AllBranchSupplier.cshtml" />
+    <Content Include="Views\Supplier\CreateBranchSupplier.cshtml" />
+    <Content Include="Views\Supplier\EditBranchSupplier.cshtml" />
+    <Content Include="Views\Purchases\PurchaseStockProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -404,6 +424,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Purchase\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj">

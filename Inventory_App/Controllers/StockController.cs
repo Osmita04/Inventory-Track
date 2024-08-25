@@ -8,8 +8,7 @@ using System.Web.Mvc;
 
 namespace Inventory_App.Controllers
 {
-
-   
+ 
     public class StockController : Controller
     {
         private InventoryERPDbEntities DB = new InventoryERPDbEntities();
