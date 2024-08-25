@@ -10,23 +10,25 @@ namespace Inventory_App.Models
     {
         public int AccountControlID { get; set; }
         public int CompanyID { get; set; }
-        [Required(ErrorMessage ="Required*")]
+      
         [Display(Name = "Company")]
         public string CompanyName { get; set; }
         public int BranchID { get; set; }
-        [Required(ErrorMessage = "Required*")]
-        [Display(Name = "Company")]
+       
+        [Display(Name = "Branch Name")]
         public string BranchName { get; set; }
-        public int AccountHeadID { get; set; }
         [Required(ErrorMessage = "Required*")]
-        [Display(Name = "Company")]
+        [Display(Name = "Account Head")]
+        public int AccountHeadID { get; set; }
+       
+        [Display(Name = "Account Head")]
         public string AccountHead { get; set; }
         [Required(ErrorMessage = "Required*")]
-        [Display(Name = "Company")]
+        [Display(Name = "Account Control")]
         public string AccountControlName { get; set; }
         public int UserID { get; set; }
-        [Required(ErrorMessage = "Required*")]
-        [Display(Name = "Company")]
+       
+        [Display(Name = "Create By")]
         public string CreatedBy { get; set; }
 
     }
