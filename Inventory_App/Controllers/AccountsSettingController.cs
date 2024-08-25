@@ -14,21 +14,10 @@ namespace Inventory_App.Controllers
         // GET: AccountsSetting
         public ActionResult BranchAccountSetting()
         {
-
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             {
                 return RedirectToAction("Login", "Home");
             }
-            var userid = 0;
-            var usertypeid = 0;
-            var companyid = 0;
-            var branchid = 0;
-            var branchtypeid = 0;
-            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
-            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
-            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
-            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
-            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
 
             var accountsettinglist = DB.tblAccountSettings.Where(a => a.CompanyID == companyid && a.BranchID == branchid).ToList();
