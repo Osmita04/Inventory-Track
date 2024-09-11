@@ -188,5 +188,30 @@ namespace Inventory_App.Controllers
             return View(supplierMV);
         }
 
+        public JsonResult GetSelectedSupplierDetails(int? id)
+        {
+            var data = new Supplier();
+            if (id > 0)
+            {
+                var supplier = DB.tblSuppliers.Find(id);
+                data.ContactNo = supplier.SupplierConatctNo;
+                data.Address = supplier.SupplierAddress;
+            }
+            else
+            {
+                data.ContactNo = "";
+                data.Address = "";
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+    }
+
+    class Supplier
+    {
+        public string ContactNo { get; set; } 
+        public string Address { get; set;}
+
+
     }
 }

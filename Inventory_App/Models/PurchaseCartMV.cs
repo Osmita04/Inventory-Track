@@ -1,14 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-
 namespace Inventory_App.Models
 {
-
-    public partial class PurchaseCartDetailMV
+    public class PurchaseCartMV
     {
         public int PurchaseCartDetailID { get; set; }
         [Display(Name = "Product ")]
@@ -41,6 +39,10 @@ namespace Inventory_App.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> ExpiryDate { get; set; }
 
+        [Required(ErrorMessage ="Required*")]
+        public int SupplierID { get; set; }
 
+        public PurchaseCartSummaryMV OrderSummary { get; set; }
+        public List<PurchaseItemsMV> PurchaseItemsList { get; set; }
     }
 }

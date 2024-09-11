@@ -393,5 +393,32 @@ namespace Inventory_App.Controllers
             return View(stockMV);
         }
 
+
+        public JsonResult GetSelectProductDetails(int? productid)
+        {
+            var data = new SelectProduct();
+            if (productid > 0)
+            {
+                var product = DB.tblStocks.Find(productid);
+                data.SaleUnitPrice = product.SaleUnitPrice;
+                data.CurrentPurchaseUnitPrice = product.CurrentPurchaseUnitPrice;
+            }
+            else
+            {
+                data.SaleUnitPrice = 0;
+                data.CurrentPurchaseUnitPrice = 0;
+
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
     }
+}
+
+class SelectProduct
+{
+
+    public double SaleUnitPrice { get; set; }
+    public double CurrentPurchaseUnitPrice { get; set; }
+
 }

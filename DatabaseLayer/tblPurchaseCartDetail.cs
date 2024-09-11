@@ -21,6 +21,11 @@ namespace DatabaseLayer
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
         public int UserID { get; set; }
+        public double PreviousPurchaseUnitPrice { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> Manufacture { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<double> SaleUnitPrice { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCompany tblCompany { get; set; }

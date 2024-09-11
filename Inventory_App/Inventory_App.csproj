@@ -16,8 +16,7 @@
     <AssemblyName>Inventory_App</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -317,6 +316,8 @@
     <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\PayrollMV.cs" />
     <Compile Include="Models\PurchaseCartDetailMV.cs" />
+    <Compile Include="Models\PurchaseCartMV.cs" />
+    <Compile Include="Models\PurchaseCartSummaryMV.cs" />
     <Compile Include="Models\PurchaseItemsMV.cs" />
     <Compile Include="Models\SaleCartDetailMV.cs" />
     <Compile Include="Models\StateMV.cs" />

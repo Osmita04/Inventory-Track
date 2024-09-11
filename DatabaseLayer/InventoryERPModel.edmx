@@ -297,6 +297,11 @@
           <Property Name="CompanyID" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PreviousPurchaseUnitPrice" Type="float" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Manufacture" Type="date" />
+          <Property Name="ExpiryDate" Type="date" />
+          <Property Name="SaleUnitPrice" Type="float" />
         </EntityType>
         <EntityType Name="tblSaleCartDetail">
           <Key>
@@ -465,7 +470,7 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -2529,6 +2534,11 @@
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblPurchaseCartDetail_tblCompany" FromRole="tblPurchaseCartDetail" ToRole="tblCompany" />
           <NavigationProperty Name="tblStock" Relationship="Self.FK_tblPurchaseCartDetail_tblStock" FromRole="tblPurchaseCartDetail" ToRole="tblStock" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPurchaseCartDetail_tblUser" FromRole="tblPurchaseCartDetail" ToRole="tblUser" />
+          <Property Name="PreviousPurchaseUnitPrice" Type="Double" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacture" Type="DateTime" Precision="0" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="SaleUnitPrice" Type="Double" />
         </EntityType>
         <EntityType Name="tblSaleCartDetail">
           <Key>
@@ -2776,7 +2786,7 @@
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnPayment" />
           <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblUser" FromRole="tblUser" ToRole="tblTransaction" />
           <NavigationProperty Name="tblUserType" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
-          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -4756,6 +4766,11 @@
           <EntitySetMapping Name="tblPurchaseCartDetails">
             <EntityTypeMapping TypeName="InventoryERPDbModel.tblPurchaseCartDetail">
               <MappingFragment StoreEntitySet="tblPurchaseCartDetail">
+                <ScalarProperty Name="SaleUnitPrice" ColumnName="SaleUnitPrice" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PreviousPurchaseUnitPrice" ColumnName="PreviousPurchaseUnitPrice" />
                 <ScalarProperty Name="PurchaseCartDetailID" ColumnName="PurchaseCartDetailID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
