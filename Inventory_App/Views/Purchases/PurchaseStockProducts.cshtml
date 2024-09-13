@@ -231,23 +231,23 @@
                     <tr>
                         <td>Subtotal</td>
                         <td>
-                            
-                                @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.OrderSummary.SubTotal, "", new { @class = "text-danger" })
-  
+
+                            @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control", @id = "subtotal", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.OrderSummary.SubTotal, "", new { @class = "text-danger" })
+
                         </td>
                     </tr>
                     <tr>
                         <td>Estimated Tax</td>
                         <td>
-                            @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control", @id = "estimatedtax", @onchange = "CalculateOrderTotal()" } })
                             @Html.ValidationMessageFor(model => model.OrderSummary.EstimatedTax, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
                         <td>Shiping</td>
                         <td>
-                            @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control", @id = "shippingfee", @onchange = "CalculateOrderTotal()" } })
                             @Html.ValidationMessageFor(model => model.OrderSummary.ShippingFee, "", new { @class = "text-danger" })
                         </td>
                     </tr>
@@ -256,15 +256,26 @@
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-right text-right">
-                        <div class="text-bold">@Model.OrderSummary.OrderTotal</div>
+
+                        <div id="ordertotal" />
                         <div class="text-sm">BDT</div>
                     </div>
                     <div class="float-left text-bold text-dark">ORDER TOTAL</div>
                 </div>
             </div>
+
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-left text-left">
+                        <input type="checkbox" id="ispaymentispaid" />  Is Order Payment is Paid?
+
+                    </div>                  
+                </div>
+            </div>
+
             <div class="card-body">
                 <p>
-                    <button class="btn btn-primary btn-block" type="button">CHECKOUT</button>
+                    <button class="btn btn-primary btn-block" onclick = "CheckoutPurchase()" type="button">CHECKOUT</button>
                 </p>
                 <small class="text-muted">* To use this method you must be registered first</small>
             </div>
@@ -274,8 +285,32 @@
 }
 
 
+<script src="=~/Scripts/jquery-3.4.1.js"></script>
+ <script type="text/javascript">
+     $(document).ready(function () {
 
-        <script type="text/javascript">
+
+         var supplierID = $("#SupplierID").val();
+         $.ajax({
+             type: "GET",
+             url: "/Supplier/GetSelectedSupplierDetails?id=" + supplierID,
+             data: [],
+             success: function (data) {
+
+                 $("#suppliercontactno").text(data.ContactNo);
+                 $("#supplieraddress").text(data.Address);
+             }
+
+         });
+
+
+                var purchase_subtotal = document.getElementById('subtotal').value;
+                var purchase_shippingfee = document.getElementById('shippingfee').value;
+                var purchase_estimatedtax = document.getElementById('estimatedtax').value;
+                var purchase_ordertotal = parseFloat(purchase_subtotal) + parseFloat(purchase_shippingfee) + parseFloat(purchase_estimatedtax);
+                $("#ordertotal").text(purchase_ordertotal);
+            });
+
             function myFunction() {
                 var productID = $("#ProductID").val();
                 $.ajax({
@@ -305,6 +340,31 @@
                     }
 
                 });
+             };
+
+
+     function CheckoutPurchase() {
+         var supplierID = $("#SupplierID").val();
+         var ispaymentpaid = $("#ispaymentispaid").is(':checked');
+         $.ajax({
+             type: "GET",
+             url: "/Purchases/CheckoutPurchase?supplierid=" + supplierID + "&ispaymentispaid=" + ispaymentpaid,
+             data: [],
+             success: function (data) {
+
+                
+             }
+
+         });
+     };
+
+
+            function CalculateOrderTotal() {
+                var purchase_subtotal = document.getElementById('subtotal').value;
+                var purchase_shippingfee = document.getElementById('shippingfee').value;
+                var purchase_estimatedtax = document.getElementById('estimatedtax').value;
+                var purchase_ordertotal = parseFloat(purchase_subtotal) + parseFloat(purchase_shippingfee) + parseFloat(purchase_estimatedtax);
+                $("#ordertotal").text(purchase_ordertotal);
             };
 
         </script>
