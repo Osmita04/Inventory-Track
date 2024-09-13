@@ -39,10 +39,7 @@ namespace Inventory_App.Controllers
 
             foreach (var product in stock)
             {
-                var item = new PurchaseItemsMV();
-                //item.BranchID = product.BranchID;
-                //item.CategoryID = product.tblStock.tblCategory.CategoryID;
-                //item.CompanyID = product.CompanyID;
+                var item = new PurchaseItemsMV();              
                 item.CreateBy = product.tblUser.UserName;
                 item.PreviousPurchaseUnitPrice = product.PreviousPurchaseUnitPrice;
                 item.CurrentPurchaseUnitPrice = product.purchaseUnitPrice;
@@ -51,7 +48,8 @@ namespace Inventory_App.Controllers
                 item.Manufacture = product.Manufacture;
                 //item.IsActive = product.IsActive;
                 item.ProductID = product.ProductID;
-                item.ProductName = product.tblStock.ProductName;
+                var getproduct = DB.tblStocks.Find(product.ProductID);
+                item.ProductName = getproduct != null ? getproduct.ProductName : "?";
                 item.Quantity = product.PurchaseQuantity;
                 item.SaleUnitPrice = (double)product.SaleUnitPrice;
                 item.PurchaseCartDetailID = product.PurchaseCartDetailID;
@@ -120,7 +118,17 @@ namespace Inventory_App.Controllers
                     item.UserID = userid;
                     DB.tblPurchaseCartDetails.Add(item);
                     DB.SaveChanges();
-                    return RedirectToAction("PurchaseStockProducts");
+                    //  return RedirectToAction("PurchaseStockProducts");
+
+
+                    purchaseCartMV.ProductID = 0;
+                    purchaseCartMV.PurchaseQuantity = 0;
+                    purchaseCartMV.CurrentPurchaseUnitPrice = 0;
+                    purchaseCartMV.SaleUnitPrice = 0;
+                    purchaseCartMV.PreviousPurchaseUnitPrice = 0;
+                    purchaseCartMV.Manufacture = DateTime.Now;
+                    purchaseCartMV.ExpiryDate = DateTime.Now;
+                    purchaseCartMV.Description = string.Empty;
                 }
                 else
                 {
@@ -139,9 +147,7 @@ namespace Inventory_App.Controllers
             foreach (var product in stock)
             {
                 var item = new PurchaseItemsMV();
-                //item.BranchID = product.BranchID;
-                //item.CategoryID = product.tblStock.tblCategory.CategoryID;
-                //item.CompanyID = product.CompanyID;
+                
                 item.CreateBy = product.tblUser.UserName;
                 item.PreviousPurchaseUnitPrice = product.PreviousPurchaseUnitPrice;
                 item.CurrentPurchaseUnitPrice = product.purchaseUnitPrice;
@@ -150,7 +156,8 @@ namespace Inventory_App.Controllers
                 item.Manufacture = product.Manufacture;
                 //item.IsActive = product.IsActive;
                 item.ProductID = product.ProductID;
-                item.ProductName = product.tblStock.ProductName;
+                var getproduct = DB.tblStocks.Find(product.ProductID);
+                item.ProductName = getproduct != null ? getproduct.ProductName : "?";
                 item.Quantity = product.PurchaseQuantity;
                 item.SaleUnitPrice = (double)product.SaleUnitPrice;
                 item.PurchaseCartDetailID = product.PurchaseCartDetailID;
@@ -182,6 +189,11 @@ namespace Inventory_App.Controllers
             DB.SaveChanges();
             return RedirectToAction("PurchaseStockProducts");
 
+        }
+
+        public ActionResult CheckoutPurchase(int ? supplierid, bool ispaymentispaid)
+        {
+            return View();
         }
     }
 }
