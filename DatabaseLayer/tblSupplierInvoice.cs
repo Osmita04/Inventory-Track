@@ -32,6 +32,9 @@ namespace DatabaseLayer
         public System.DateTime InvoiceDate { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
+        public Nullable<double> subtotalamount { get; set; }
+        public double estimatedtax { get; set; }
+        public double shippingfee { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCompany tblCompany { get; set; }
