@@ -345,10 +345,13 @@
 
      function CheckoutPurchase() {
          var supplierID = $("#SupplierID").val();
+         var purchase_subtotal = document.getElementById('subtotal').value;
+         var purchase_shippingfee = document.getElementById('shippingfee').value;
+         var purchase_estimatedtax = document.getElementById('estimatedtax').value;
          var ispaymentpaid = $("#ispaymentispaid").is(':checked');
          $.ajax({
              type: "GET",
-             url: "/Purchases/CheckoutPurchase?supplierid=" + supplierID + "&ispaymentispaid=" + ispaymentpaid,
+             url: "/Purchases/CheckoutPurchase?supplierid=" + supplierID + "&ispaymentispaid=" + ispaymentpaid + "&estimatedtax=" + purchase_estimatedtax + "&shippingfee=" + purchase_shippingfee + "&subtotal=" + purchase_subtotal ,
              data: [],
              success: function (data) {
 

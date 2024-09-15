@@ -365,10 +365,13 @@
           <Property Name="CompanyID" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="InvoiceNo" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="TotalAmount" Type="float" Nullable="false" />
           <Property Name="InvoiceDate" Type="date" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="subtotalamount" Type="float" />
+          <Property Name="estimatedtax" Type="float" Nullable="false" />
+          <Property Name="shippingfee" Type="float" Nullable="false" />
+          <Property Name="TotalAmount" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierInvoiceDetail">
           <Key>
@@ -379,6 +382,9 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="PurchaseQuantity" Type="int" Nullable="false" />
           <Property Name="purchaseUnitPrice" Type="float" Nullable="false" />
+          <Property Name="previouspurchaseunitprice" Type="float" Nullable="false" />
+          <Property Name="manufacturedate" Type="date" Nullable="false" />
+          <Property Name="expirydate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierPayment">
           <Key>
@@ -2635,6 +2641,9 @@
           <NavigationProperty Name="tblSupplierReturnInvoices" Relationship="Self.FK_tblSupplierReturnInvoice_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoice" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoiceDetail" />
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnPayment" />
+          <Property Name="subtotalamount" Type="Double" />
+          <Property Name="estimatedtax" Type="Double" Nullable="false" />
+          <Property Name="shippingfee" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierInvoiceDetail">
           <Key>
@@ -2648,6 +2657,9 @@
           <NavigationProperty Name="tblStock" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblSupplierInvoiceDetail" ToRole="tblStock" />
           <NavigationProperty Name="tblSupplierInvoice" Relationship="Self.FK_tblSupplierInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierInvoice" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoiceDetail" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierReturnInvoiceDetail" />
+          <Property Name="previouspurchaseunitprice" Type="Double" Nullable="false" />
+          <Property Name="manufacturedate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="expirydate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="tblSupplierPayment">
           <Key>
@@ -4841,6 +4853,9 @@
           <EntitySetMapping Name="tblSupplierInvoices">
             <EntityTypeMapping TypeName="InventoryERPDbModel.tblSupplierInvoice">
               <MappingFragment StoreEntitySet="tblSupplierInvoice">
+                <ScalarProperty Name="shippingfee" ColumnName="shippingfee" />
+                <ScalarProperty Name="estimatedtax" ColumnName="estimatedtax" />
+                <ScalarProperty Name="subtotalamount" ColumnName="subtotalamount" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
@@ -4856,6 +4871,9 @@
           <EntitySetMapping Name="tblSupplierInvoiceDetails">
             <EntityTypeMapping TypeName="InventoryERPDbModel.tblSupplierInvoiceDetail">
               <MappingFragment StoreEntitySet="tblSupplierInvoiceDetail">
+                <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+                <ScalarProperty Name="manufacturedate" ColumnName="manufacturedate" />
+                <ScalarProperty Name="previouspurchaseunitprice" ColumnName="previouspurchaseunitprice" />
                 <ScalarProperty Name="SupplierInvoiceDetailID" ColumnName="SupplierInvoiceDetailID" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />

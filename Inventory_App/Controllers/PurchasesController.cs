@@ -191,8 +191,120 @@ namespace Inventory_App.Controllers
 
         }
 
-        public ActionResult CheckoutPurchase(int ? supplierid, bool ispaymentispaid)
+        public ActionResult CheckoutPurchase(
+            int ? supplierid,
+            bool ispaymentispaid,
+            float? estimatedtax,
+            float? shippingfee, 
+            float? subtotal)
         {
+
+
+
+                if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                var userid = 0;
+                var usertypeid = 0;
+                var companyid = 0;
+                var branchid = 0;
+                var branchtypeid = 0;
+                int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+                int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+                int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+                int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+                int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+
+                using (var transaction = DB.Database.BeginTransaction())
+                {
+
+                    try
+                     {
+
+                    float totalamount = (float)subtotal + (float)estimatedtax + (float)shippingfee;
+                    string invoiceno = "PUR" + DateTime.Now.ToString("yyyymmddhhmmss") + userid;
+                    
+                    var invoiceheader = new tblSupplierInvoice();
+
+
+                    invoiceheader.SupplierID = (int )supplierid;
+                    invoiceheader.CompanyID = companyid;
+                    invoiceheader.BranchID = branchid;
+                    invoiceheader.InvoiceNo = invoiceno;
+                    invoiceheader.TotalAmount = totalamount;
+                    invoiceheader.InvoiceDate = DateTime.Now;
+                    invoiceheader.Description = " ";   
+                    invoiceheader.UserID = userid;
+                    invoiceheader.subtotalamount = subtotal;
+                    invoiceheader.estimatedtax = (float)estimatedtax;
+                    invoiceheader.shippingfee = (float)shippingfee;
+
+                    DB.tblSupplierInvoices.Add(invoiceheader);
+                    DB.SaveChanges();
+
+
+                    var purchasestock = DB.tblPurchaseCartDetails.Where(p => p.CompanyID == companyid && p.BranchID == branchid && p.UserID == userid).ToList();
+                   
+
+                    foreach (var product in purchasestock)
+                    {
+                        var purchaseitem = new tblSupplierInvoiceDetail();
+
+
+
+                        purchaseitem.SupplierInvoiceID = invoiceheader.SupplierInvoiceID;
+                        purchaseitem.ProductID = product.ProductID;
+                        purchaseitem.PurchaseQuantity = product.PurchaseQuantity;   
+                        purchaseitem.purchaseUnitPrice = product.purchaseUnitPrice;
+                        purchaseitem.previouspurchaseunitprice = product.PreviousPurchaseUnitPrice;
+                        purchaseitem.manufacturedate = (DateTime)product.Manufacture;
+                        purchaseitem.expirydate = (DateTime)product.ExpiryDate;
+                        DB.tblSupplierInvoiceDetails.Add(purchaseitem); 
+                        DB.SaveChanges();
+
+                        var stockproduct = DB.tblStocks.Find(product.ProductID);
+                        stockproduct.Manufacture = (DateTime)product.Manufacture;
+                        stockproduct.ExpiryDate = (DateTime)product.ExpiryDate; 
+                        stockproduct.Quantity = stockproduct.Quantity + product.PurchaseQuantity;
+                        stockproduct.CurrentPurchaseUnitPrice = product.purchaseUnitPrice;
+                        stockproduct.SaleUnitPrice = (double)product.SaleUnitPrice;
+                        DB.Entry(stockproduct).State = System.Data.Entity.EntityState.Modified;
+                        DB.SaveChanges();
+
+                    }
+
+                    if(ispaymentispaid == true)
+                    {
+                        invoiceno = "PPP" + DateTime.Now.ToString("yyyymmddhhmmss") + userid;
+                        var invoicepayment = new tblSupplierPayment();
+                        invoicepayment.SupplierID = (int)supplierid;
+                        invoicepayment.SupplierInvoiceID = invoiceheader.SupplierInvoiceID;
+                        invoicepayment.CompanyID = companyid;
+                        invoicepayment.BranchID = branchid;
+                        invoicepayment.InvoiceNo = invoiceno; 
+                        invoicepayment.TotalAmount = totalamount;
+                        invoicepayment.PaymentAmount = totalamount;
+                        invoicepayment.RemainingBalance = 0;
+                        invoicepayment.UserID = userid;
+                        invoicepayment.InvoiceDate =  DateTime.Now;
+                        DB.tblSupplierPayments.Add(invoicepayment);
+                        DB.SaveChanges();   
+    }
+
+                    transaction.Commit();
+                     }
+                    catch 
+                     { 
+                
+                        transaction.Rollback();
+                
+                     }
+                   
+                }
+           
+
             return View();
         }
     }
